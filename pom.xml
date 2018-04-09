@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.ljbm</groupId>
+		<artifactId>ljbm</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>..\ljbm</relativePath>
+	</parent>
+
+	<artifactId>ljbmDominio</artifactId>
+	<name>ljbmDominio</name>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate.javax.persistence</groupId> -->
+		<!-- <artifactId>hibernate-jpa-2.0-api</artifactId> -->
+		<!-- <version>1.0.1.Final</version> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>
