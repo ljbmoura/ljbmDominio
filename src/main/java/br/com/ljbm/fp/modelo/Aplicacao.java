@@ -7,7 +7,10 @@ import java.util.Calendar;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,33 +42,42 @@ public class Aplicacao implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8019221936078212375L;
-
+	private static final long serialVersionUID = -2999371111194178089L;
+	private Long ide;
+	private FundoInvestimento fundoInvestimento;
 	private Calendar data;
 	private Long documento;
 	private BigDecimal valorAplicado;
 	private BigDecimal quantidadeCotas;
 	private BigDecimal saldoCotas;
 
-	/**
-	 * @param data
-	 * @param documento
-	 * @param valorAplicado
-	 * @param quantidadeCotas
-	 * @param saldoCotas
-	 */
-	public Aplicacao(Calendar data, Long documento, BigDecimal valorAplicado,
-			BigDecimal quantidadeCotas, BigDecimal saldoCotas) {
-		this.data = data;
-		this.documento = documento;
-		this.valorAplicado = valorAplicado;
-		this.quantidadeCotas = quantidadeCotas;
-		this.saldoCotas = saldoCotas;
-	}
 
-	public Aplicacao() {
-		// construtor sem argumentos exigido pela JPA
+//	/**
+//	 * @param data
+//	 * @param documento
+//	 * @param valorAplicado
+//	 * @param quantidadeCotas
+//	 * @param saldoCotas
+//	 */
+//	public Aplicacao(Calendar data, Long documento, BigDecimal valorAplicado,
+//			BigDecimal quantidadeCotas, BigDecimal saldoCotas) {
+//		this.data = data;
+//		this.documento = documento;
+//		this.valorAplicado = valorAplicado;
+//		this.quantidadeCotas = quantidadeCotas;
+//		this.saldoCotas = saldoCotas;
+//	}
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ide")
+	public Long getIde() {
+		return ide;
 	}
+	
+//	public Aplicacao() {
+//		// construtor sem argumentos exigido pela JPA
+//	}
 
 	/**
 	 * @return the data
@@ -80,10 +92,14 @@ public class Aplicacao implements java.io.Serializable {
 	/**
 	 * @return the documento
 	 */
-	@Id
-	@Column(name = "documento", nullable = false)
+	@Column(name = "documento", nullable = true)
 	public Long getDocumento() {
 		return documento;
+	}
+	
+	@ManyToOne(optional=false)
+	public FundoInvestimento getFundoInvestimento() {
+		return fundoInvestimento;
 	}
 
 	/**
@@ -145,7 +161,11 @@ public class Aplicacao implements java.io.Serializable {
 				+ ", saldoCotas=" + FormatadorBR.formataDecimal(saldoCotas)
 				+ "]";
 	}
-
+	
+	public void setIde(Long ide) {
+		this.ide = ide;
+	}
+	
 	/**
 	 * @param data
 	 *            the data to set
@@ -184,5 +204,9 @@ public class Aplicacao implements java.io.Serializable {
 	 */
 	public void setSaldoCotas(BigDecimal saldoCotas) {
 		this.saldoCotas = saldoCotas;
+	}
+
+	public void setFundoInvestimento(FundoInvestimento fundoInvestimento) {
+		this.fundoInvestimento = fundoInvestimento;
 	}
 }

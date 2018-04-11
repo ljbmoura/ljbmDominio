@@ -1,5 +1,8 @@
 package br.com.ljbm.fp.modelo;
 
+import static com.jayway.restassured.RestAssured.given;
+
+import static com.jayway.restassured.RestAssured.basePath;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.math.BigDecimal;
@@ -11,13 +14,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.jayway.restassured.path.json.JsonPath;
 
 /**
  * Fundo Investimento entity
@@ -36,50 +41,61 @@ public class FundoInvestimento implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4518086212521607721L;
 
-	private Long id;
-	private Integer version;
+	private Long ide;
+	private Integer versao;
 	private String cnpj;
 	private String nome;
-	private BigDecimal taxaimpostorenda;
+	private BigDecimal taxaImpostoRenda;
 	private TipoFundoInvestimento tipoFundoInvestimento;
+	private Corretora corretora;
 
 	public FundoInvestimento() {
 		// The no-arg constructor required by JPA
 	}
 
-	public FundoInvestimento(String cnpj, String nome,
-			BigDecimal taxaimpostorenda, TipoFundoInvestimento tipoFundoInvestimento) {
+	public FundoInvestimento(String cnpj, String nome, BigDecimal taxaImpostoRenda,
+			TipoFundoInvestimento tipoFundoInvestimento, Corretora corretora) {
+		super();
 		this.cnpj = cnpj;
 		this.nome = nome;
-		this.taxaimpostorenda = taxaimpostorenda;
+		this.taxaImpostoRenda = taxaImpostoRenda;
+		this.tipoFundoInvestimento = tipoFundoInvestimento;
+		this.corretora = corretora;
+	}
+
+	public FundoInvestimento(String cnpj, String nome, BigDecimal taxaimpostorenda,
+			TipoFundoInvestimento tipoFundoInvestimento) {
+		this.cnpj = cnpj;
+		this.nome = nome;
+		this.taxaImpostoRenda = taxaimpostorenda;
 		this.tipoFundoInvestimento = tipoFundoInvestimento;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IDEFUNDOINVESTIMENTO", nullable = false)
-	public Long getId() {
-		return this.id;
+	@Column(name = "ide", nullable = false)
+	public Long getIde() {
+		return this.ide;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIde(Long ide) {
+		this.ide = ide;
 	}
 
 	@Version
-	@Column(name = "versaoregistro")
-	public Integer getVersion() {
-		return this.version;
+	@Column(name = "versao")
+	public Integer getVersao() {
+		return this.versao;
 	}
 
-	public void setVersion(Integer version) {
-		this.version = version;
+	public void setVersao(Integer versao) {
+		this.versao = versao;
 	}
 
-	@Column(name = "CNPJ", unique = true, nullable = true, length = 14)
+	@Column(name = "cnpj", nullable = true, length = 14)
 	// TODO configurar validações CNPJ, ver curso caelum
-//	@Size(min = 0, max = 14)
-//	@Digits(fraction = 0, integer = 14)
+	// @Size(min = 0, max = 14)
+	// @Digits(fraction = 0, integer = 14)
 	public String getCNPJ() {
 		return this.cnpj;
 	}
@@ -104,11 +120,11 @@ public class FundoInvestimento implements java.io.Serializable {
 
 	@Column(name = "taxaImpostoRenda", nullable = true, precision = 19, scale = 6)
 	public BigDecimal getTaxaImpostoRenda() {
-		return this.taxaimpostorenda;
+		return this.taxaImpostoRenda;
 	}
 
 	public void setTaxaImpostoRenda(BigDecimal taxaimpostorenda) {
-		this.taxaimpostorenda = taxaimpostorenda;
+		this.taxaImpostoRenda = taxaimpostorenda;
 	}
 
 	@Column(name = "tipoFundoInvestimento", nullable = true)
@@ -119,8 +135,17 @@ public class FundoInvestimento implements java.io.Serializable {
 
 	public void setTipoFundoInvestimento(TipoFundoInvestimento tipoFundoInvestimento) {
 		this.tipoFundoInvestimento = tipoFundoInvestimento;
-	}	
-	
+	}
+
+	@ManyToOne(optional = false)
+	public Corretora getCorretora() {
+		return corretora;
+	}
+
+	public void setCorretora(Corretora corretora) {
+		this.corretora = corretora;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -128,13 +153,66 @@ public class FundoInvestimento implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "FundoInvestimento \n\t[id=" + id + 
-				", \n\tnome=" + nome 
-				+ ", \n\tCNPJ=" + cnpj 
-				+ ", \n\tipoFundoInvestimento=" + tipoFundoInvestimento
-				+ ", \n\ttaxaImpostoRenda=" + taxaimpostorenda
-				+ ", \n\tversion=" + version + "]";
+		return "FundoInvestimento \n\t[id=" + ide + ", \n\tnome=" + nome + ", \n\tCNPJ=" + cnpj
+				+ ", \n\tipoFundoInvestimento=" + tipoFundoInvestimento + ", \n\ttaxaImpostoRenda=" + taxaImpostoRenda
+				+ ", \n\tversion=" + versao + "]";
 	}
 
+	public static void main(String[] args) {
 
+		basePath = "http://pc:9080/ljbmWeb";
+
+		Corretora Agora = new Corretora();
+		Agora.setIde(3l);
+		
+		// JsonPath retorno = criaNtnb2024Agora(Agora);
+		// JsonPath retorno = criaNtnb2035Agora(Agora);
+		// JsonPath retorno = criaAgoraPrefixado2019(Agora);
+
+		JsonPath retorno = criaAgoraPrefixado2023(Agora);
+		
+		retorno.prettyPrint();
+		FundoInvestimento x = retorno.getObject("", FundoInvestimento.class);
+		System.out.println(x.toString());
+	}
+
+	private static JsonPath enviaPost(FundoInvestimento fundoInvestimento) {
+		JsonPath retorno = given().header("Accept", "application/json").contentType("application/json")
+				.body(fundoInvestimento).when().post("http://pc:9080/ljbmWeb/rest/fundosInvestimento").andReturn()
+				.jsonPath();
+		return retorno;
+	}
+
+	private static JsonPath criaAgoraPrefixado2023(Corretora corretora) {
+
+		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "Agora Prefixado 2023",
+				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
+
+		return enviaPost(fundoInvestimento);
+	}
+
+	@SuppressWarnings("unused")
+	private static JsonPath criaAgoraPrefixado2019(Corretora corretora) {
+
+		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "Agora Prefixado 2019",
+				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
+		return enviaPost(fundoInvestimento);
+
+	}
+	
+	@SuppressWarnings("unused")
+	private static JsonPath criaNtnb2035Agora(Corretora corretora) {
+
+		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "agora ntnb-2035",
+				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
+		return enviaPost(fundoInvestimento);
+	}
+	
+	@SuppressWarnings("unused")
+	private static JsonPath criaNtnb2024Agora(Corretora corretora) {
+
+		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "agora ntnb-2024",
+				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
+		return enviaPost(fundoInvestimento);
+	}
 }
