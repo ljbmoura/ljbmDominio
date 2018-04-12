@@ -1,8 +1,5 @@
 package br.com.ljbm.fp.modelo;
 
-import static com.jayway.restassured.RestAssured.given;
-
-import static com.jayway.restassured.RestAssured.basePath;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.math.BigDecimal;
@@ -12,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -21,8 +19,6 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.jayway.restassured.path.json.JsonPath;
 
 /**
  * Fundo Investimento entity
@@ -34,7 +30,7 @@ import com.jayway.restassured.path.json.JsonPath;
  * 
  */
 @Entity
-@Table(name = "FundoInvestimento", uniqueConstraints = @UniqueConstraint(columnNames = "CNPJ"))
+@Table(name = "FundoInvestimento", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
 @Cacheable
 @XmlRootElement
 public class FundoInvestimento implements java.io.Serializable {
@@ -137,7 +133,7 @@ public class FundoInvestimento implements java.io.Serializable {
 		this.tipoFundoInvestimento = tipoFundoInvestimento;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch=FetchType.LAZY)
 	public Corretora getCorretora() {
 		return corretora;
 	}
@@ -158,61 +154,4 @@ public class FundoInvestimento implements java.io.Serializable {
 				+ ", \n\tversion=" + versao + "]";
 	}
 
-	public static void main(String[] args) {
-
-		basePath = "http://pc:9080/ljbmWeb";
-
-		Corretora Agora = new Corretora();
-		Agora.setIde(3l);
-		
-		// JsonPath retorno = criaNtnb2024Agora(Agora);
-		// JsonPath retorno = criaNtnb2035Agora(Agora);
-		// JsonPath retorno = criaAgoraPrefixado2019(Agora);
-
-		JsonPath retorno = criaAgoraPrefixado2023(Agora);
-		
-		retorno.prettyPrint();
-		FundoInvestimento x = retorno.getObject("", FundoInvestimento.class);
-		System.out.println(x.toString());
-	}
-
-	private static JsonPath enviaPost(FundoInvestimento fundoInvestimento) {
-		JsonPath retorno = given().header("Accept", "application/json").contentType("application/json")
-				.body(fundoInvestimento).when().post("http://pc:9080/ljbmWeb/rest/fundosInvestimento").andReturn()
-				.jsonPath();
-		return retorno;
-	}
-
-	private static JsonPath criaAgoraPrefixado2023(Corretora corretora) {
-
-		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "Agora Prefixado 2023",
-				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
-
-		return enviaPost(fundoInvestimento);
-	}
-
-	@SuppressWarnings("unused")
-	private static JsonPath criaAgoraPrefixado2019(Corretora corretora) {
-
-		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "Agora Prefixado 2019",
-				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
-		return enviaPost(fundoInvestimento);
-
-	}
-	
-	@SuppressWarnings("unused")
-	private static JsonPath criaNtnb2035Agora(Corretora corretora) {
-
-		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "agora ntnb-2035",
-				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
-		return enviaPost(fundoInvestimento);
-	}
-	
-	@SuppressWarnings("unused")
-	private static JsonPath criaNtnb2024Agora(Corretora corretora) {
-
-		FundoInvestimento fundoInvestimento = new FundoInvestimento("74014747000135", "agora ntnb-2024",
-				new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, corretora);
-		return enviaPost(fundoInvestimento);
-	}
 }

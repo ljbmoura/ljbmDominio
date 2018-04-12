@@ -42,7 +42,7 @@ public class Corretora implements java.io.Serializable {
 		this.ide = ide;
 	}
 
-	@Column(name="cnpj", nullable = false)
+	@Column(name="cnpj", nullable = false, unique=true)
 	public String getCnpj() {
 		return cnpj;
 	}
