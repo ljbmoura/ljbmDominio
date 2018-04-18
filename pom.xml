@@ -22,18 +22,17 @@
 		<!-- </dependency> -->
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<groupId>org.hibernate.javax.persistence</groupId>
-			<version>1.0.0.Final</version>
-			<scope>provided</scope>
+			<version>${hibernate-jpa-2.1-api.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
