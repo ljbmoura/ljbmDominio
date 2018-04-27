@@ -133,7 +133,7 @@ public class FundoInvestimento implements java.io.Serializable {
 		this.tipoFundoInvestimento = tipoFundoInvestimento;
 	}
 
-	@ManyToOne(optional = false, fetch=FetchType.LAZY)
+	@ManyToOne(optional = false, fetch=FetchType.EAGER)
 	public Corretora getCorretora() {
 		return corretora;
 	}

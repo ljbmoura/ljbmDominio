@@ -32,7 +32,7 @@ public class Corretora implements java.io.Serializable {
 	private Integer versao;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ide")
 	public Long getIde() {
 		return ide;
@@ -42,7 +42,7 @@ public class Corretora implements java.io.Serializable {
 		this.ide = ide;
 	}
 
-	@Column(name="cnpj", nullable = false, unique=true)
+	@Column(name="cnpj", nullable = false, unique=true, columnDefinition="char(14)")
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -51,7 +51,7 @@ public class Corretora implements java.io.Serializable {
 		this.cnpj = cnpj;
 	}
 
-	@Column(name="razaoSocial", nullable=false)
+	@Column(name="razaoSocial", nullable=false, length=70, columnDefinition="varchar(70)")
 	public String getRazaoSocial() {
 		return razaoSocial;
 	}
@@ -60,7 +60,7 @@ public class Corretora implements java.io.Serializable {
 		this.razaoSocial = razaoSocial;
 	}
 
-	@Column(name="sigla", nullable=false)
+	@Column(name="sigla", nullable=false, columnDefinition="char(10)")
 	public String getSigla() {
 		return sigla;
 	}
@@ -70,7 +70,7 @@ public class Corretora implements java.io.Serializable {
 	}
 
 	@Version
-	@Column(name="versao")
+	@Column(name="versao", nullable=false)
 	public Integer getVersao() {
 		return versao;
 	}
