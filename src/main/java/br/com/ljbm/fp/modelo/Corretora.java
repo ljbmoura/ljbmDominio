@@ -16,24 +16,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Corretora implements java.io.Serializable {
 
+	public static String cnpjAgora = "74014747000135";
+	public static String cnpjBB = "00000000000191";
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5419698720414307969L;
 
 	private Long ide;
-	
+
 	private String cnpj;
-	
+
 	private String razaoSocial;
-	
+
 	private String sigla;
-	
+
 	private Integer versao;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="ide")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ide")
 	public Long getIde() {
 		return ide;
 	}
@@ -42,7 +44,7 @@ public class Corretora implements java.io.Serializable {
 		this.ide = ide;
 	}
 
-	@Column(name="cnpj", nullable = false, unique=true, columnDefinition="char(14)")
+	@Column(name = "cnpj", nullable = false, unique = true, columnDefinition = "char(14)")
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -51,7 +53,7 @@ public class Corretora implements java.io.Serializable {
 		this.cnpj = cnpj;
 	}
 
-	@Column(name="razaoSocial", nullable=false, length=70, columnDefinition="varchar(70)")
+	@Column(name = "razaoSocial", nullable = false, length = 70, columnDefinition = "varchar(70)")
 	public String getRazaoSocial() {
 		return razaoSocial;
 	}
@@ -60,7 +62,7 @@ public class Corretora implements java.io.Serializable {
 		this.razaoSocial = razaoSocial;
 	}
 
-	@Column(name="sigla", nullable=false, columnDefinition="char(10)")
+	@Column(name = "sigla", nullable = false, columnDefinition = "char(10)")
 	public String getSigla() {
 		return sigla;
 	}
@@ -70,7 +72,7 @@ public class Corretora implements java.io.Serializable {
 	}
 
 	@Version
-	@Column(name="versao", nullable=false)
+	@Column(name = "versao", nullable = false)
 	public Integer getVersao() {
 		return versao;
 	}

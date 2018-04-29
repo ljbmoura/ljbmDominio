@@ -150,7 +150,7 @@ public class FundoInvestimento implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "FundoInvestimento \n\t[id=" + ide + ", \n\tnome=" + nome + ", \n\tCNPJ=" + cnpj
-				+ ", \n\tipoFundoInvestimento=" + tipoFundoInvestimento + ", \n\ttaxaImpostoRenda=" + taxaImpostoRenda
+				+ ", \n\ttipoFundoInvestimento=" + tipoFundoInvestimento + ", \n\ttaxaImpostoRenda=" + taxaImpostoRenda
 				+ ", \n\tversion=" + versao + "]";
 	}
 
