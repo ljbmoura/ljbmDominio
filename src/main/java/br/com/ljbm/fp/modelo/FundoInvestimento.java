@@ -1,16 +1,14 @@
 package br.com.ljbm.fp.modelo;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.math.BigDecimal;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,6 +17,9 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * Fundo Investimento entity
@@ -31,11 +32,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "FundoInvestimento", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
-@Cacheable
+//@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @XmlRootElement
 public class FundoInvestimento implements java.io.Serializable {
 
-	private static final long serialVersionUID = 4518086212521607721L;
+	private static final long serialVersionUID = 3905125413892087441L;
 
 	private Long ide;
 	private Integer versao;
@@ -68,7 +70,7 @@ public class FundoInvestimento implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ide", nullable = false)
 	public Long getIde() {
 		return this.ide;
@@ -133,7 +135,7 @@ public class FundoInvestimento implements java.io.Serializable {
 		this.tipoFundoInvestimento = tipoFundoInvestimento;
 	}
 
-	@ManyToOne(optional = false, fetch=FetchType.EAGER)
+	@ManyToOne(optional = false, fetch=FetchType.LAZY)
 	public Corretora getCorretora() {
 		return corretora;
 	}

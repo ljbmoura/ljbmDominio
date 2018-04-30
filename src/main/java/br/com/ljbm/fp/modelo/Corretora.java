@@ -1,27 +1,30 @@
 package br.com.ljbm.fp.modelo;
 
-import javax.persistence.Cacheable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name = "Corretora")
-@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @XmlRootElement
 public class Corretora implements java.io.Serializable {
 
+	private static final long serialVersionUID = 5872063361515729800L;
+	
 	public static String cnpjAgora = "74014747000135";
 	public static String cnpjBB = "00000000000191";
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5419698720414307969L;
 
 	private Long ide;
 
@@ -32,6 +35,8 @@ public class Corretora implements java.io.Serializable {
 	private String sigla;
 
 	private Integer versao;
+	
+	private List<FundoInvestimento> fundosComprados;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -79,5 +84,21 @@ public class Corretora implements java.io.Serializable {
 
 	public void setVersao(Integer version) {
 		this.versao = version;
+	}
+	
+	@OneToMany(mappedBy="corretora")
+	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	public List<FundoInvestimento> getFundosComprados() {
+		return fundosComprados;
+	}
+	
+	public void setFundosComprados(List<FundoInvestimento> fundosComprados) {
+		this.fundosComprados = fundosComprados;
+	}
+
+	@Override
+	public String toString() {
+		return "Corretora [ide=" + ide + ", cnpj=" + cnpj + ", razaoSocial=" + razaoSocial + ", sigla=" + sigla
+				+ ", versao=" + versao + "]";
 	}
 }
