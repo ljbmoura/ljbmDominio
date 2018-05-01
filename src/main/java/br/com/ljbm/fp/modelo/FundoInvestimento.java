@@ -70,7 +70,7 @@ public class FundoInvestimento implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ide", nullable = false)
 	public Long getIde() {
 		return this.ide;

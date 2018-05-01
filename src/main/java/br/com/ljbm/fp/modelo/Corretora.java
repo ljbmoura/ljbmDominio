@@ -39,7 +39,7 @@ public class Corretora implements java.io.Serializable {
 	private List<FundoInvestimento> fundosComprados;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ide")
 	public Long getIde() {
 		return ide;
