@@ -16,10 +16,17 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * Fundo Investimento entity
@@ -34,7 +41,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "FundoInvestimento", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
 //@Cacheable
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@XmlRootElement
+
+@XmlRootElement(name = "FundoInvestimento")
+@JsonRootName(value = "FundoInvestimento")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = { "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao",
+		"corretora" })
+@JsonPropertyOrder({ "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
 public class FundoInvestimento implements java.io.Serializable {
 
 	private static final long serialVersionUID = 3905125413892087441L;
@@ -45,6 +58,8 @@ public class FundoInvestimento implements java.io.Serializable {
 	private String nome;
 	private BigDecimal taxaImpostoRenda;
 	private TipoFundoInvestimento tipoFundoInvestimento;
+//	@XmlTransient
+	@JsonIgnore()
 	private Corretora corretora;
 
 	public FundoInvestimento() {
@@ -61,12 +76,14 @@ public class FundoInvestimento implements java.io.Serializable {
 		this.corretora = corretora;
 	}
 
+	// TODO desativar este construtor
 	public FundoInvestimento(String cnpj, String nome, BigDecimal taxaimpostorenda,
 			TipoFundoInvestimento tipoFundoInvestimento) {
 		this.cnpj = cnpj;
 		this.nome = nome;
 		this.taxaImpostoRenda = taxaimpostorenda;
 		this.tipoFundoInvestimento = tipoFundoInvestimento;
+		this.corretora = null;
 	}
 
 	@Id
@@ -152,7 +169,9 @@ public class FundoInvestimento implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "FundoInvestimento \n\t[id=" + ide + ", \n\tnome=" + nome + ", \n\tCNPJ=" + cnpj
-				+ ", \n\ttipoFundoInvestimento=" + tipoFundoInvestimento + ", \n\ttaxaImpostoRenda=" + taxaImpostoRenda
+				+ ", \n\ttipoFundoInvestimento=" + tipoFundoInvestimento  
+				+ ", \n\ttaxaImpostoRenda=" + taxaImpostoRenda
+//				+ ", \n\tcorretora=" + corretora.getIde()
 				+ ", \n\tversion=" + versao + "]";
 	}
 

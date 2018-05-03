@@ -4,21 +4,36 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Corretora")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@XmlRootElement
+@XmlRootElement(name = "Corretora")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+	    "ide",
+	    "cnpj",
+	    "razaoSocial",
+	    "sigla",
+	    "versao"
+	})
 public class Corretora implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5872063361515729800L;
@@ -36,6 +51,8 @@ public class Corretora implements java.io.Serializable {
 
 	private Integer versao;
 	
+	@XmlTransient
+	@JsonIgnore()
 	private List<FundoInvestimento> fundosComprados;
 
 	@Id
@@ -86,8 +103,8 @@ public class Corretora implements java.io.Serializable {
 		this.versao = version;
 	}
 	
-	@OneToMany(mappedBy="corretora")
-	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@OneToMany(mappedBy="corretora", fetch=FetchType.LAZY)
+//	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	public List<FundoInvestimento> getFundosComprados() {
 		return fundosComprados;
 	}

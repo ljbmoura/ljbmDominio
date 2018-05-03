@@ -16,6 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.com.ljbm.utilitarios.FormatadorBR;
@@ -36,7 +38,8 @@ import br.com.ljbm.utilitarios.FormatadorBR;
 @Entity
 @Table(name = "Aplicacao")
 @Cacheable
-@XmlRootElement
+@XmlRootElement(name = "Aplicacao")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Aplicacao implements java.io.Serializable {
 
 	/**
