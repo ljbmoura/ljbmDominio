@@ -19,12 +19,12 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
@@ -40,14 +40,12 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @Entity
 @Table(name = "FundoInvestimento", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
 //@Cacheable
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-
+//@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @XmlRootElement(name = "FundoInvestimento")
 @JsonRootName(value = "FundoInvestimento")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao",
-		"corretora" })
-@JsonPropertyOrder({ "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
+//@XmlType(name = "", propOrder = { "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
+//@JsonPropertyOrder({ "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
 public class FundoInvestimento implements java.io.Serializable {
 
 	private static final long serialVersionUID = 3905125413892087441L;
@@ -58,8 +56,6 @@ public class FundoInvestimento implements java.io.Serializable {
 	private String nome;
 	private BigDecimal taxaImpostoRenda;
 	private TipoFundoInvestimento tipoFundoInvestimento;
-//	@XmlTransient
-	@JsonIgnore()
 	private Corretora corretora;
 
 	public FundoInvestimento() {
