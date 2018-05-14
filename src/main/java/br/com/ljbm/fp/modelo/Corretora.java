@@ -13,27 +13,28 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Corretora")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @XmlRootElement(name = "Corretora")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-	    "ide",
-	    "cnpj",
-	    "razaoSocial",
-	    "sigla",
-	    "versao"
-	})
+@XmlType(
+		propOrder = { "ide", "sigla", "razaoSocial", "cnpj", "fundosSobCustodia", "versao" })
+@JsonPropertyOrder({ "ide", "sigla", "razaoSocial", "cnpj", "fundosSobCustodia", "versao" })
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="ide")
 public class Corretora implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5872063361515729800L;
@@ -51,9 +52,11 @@ public class Corretora implements java.io.Serializable {
 
 	private Integer versao;
 	
-	@XmlTransient
-	@JsonIgnore()
-	private List<FundoInvestimento> fundosComprados;
+//	@XmlTransient
+//	@JsonIgnore()
+	@JsonInclude(Include.NON_NULL)
+	@XmlElementWrapper(name="fundosComprados")
+	private List<FundoInvestimento> fundosSobCustodia;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,12 +108,12 @@ public class Corretora implements java.io.Serializable {
 	
 	@OneToMany(mappedBy="corretora", fetch=FetchType.LAZY)
 //	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	public List<FundoInvestimento> getFundosComprados() {
-		return fundosComprados;
+	public List<FundoInvestimento> getFundosSobCustodia() {
+		return fundosSobCustodia;
 	}
 	
-	public void setFundosComprados(List<FundoInvestimento> fundosComprados) {
-		this.fundosComprados = fundosComprados;
+	public void setFundosSobCustodia(List<FundoInvestimento> fundosSobCustodia) {
+		this.fundosSobCustodia = fundosSobCustodia;
 	}
 
 	@Override

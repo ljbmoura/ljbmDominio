@@ -23,6 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * Fundo Investimento entity
  * 
@@ -41,6 +46,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType(name = "", propOrder = { "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
 //@JsonPropertyOrder({ "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="ide")
 public class FundoInvestimento implements java.io.Serializable {
 
 	private static final long serialVersionUID = 3905125413892087441L;
@@ -51,6 +57,7 @@ public class FundoInvestimento implements java.io.Serializable {
 	private String nome;
 	private BigDecimal taxaImpostoRenda;
 	private TipoFundoInvestimento tipoFundoInvestimento;
+	@JsonInclude(Include.NON_NULL)
 	private Corretora corretora;
 
 	public FundoInvestimento() {
