@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+     http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+
+	<persistence-unit name="ljbmUP" transaction-type="JTA">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<!-- para criar o schema -->
+		<jta-data-source>jdbc/ljbmDS</jta-data-source>
+		<!-- para rodar em produção -->
+<!-- 		<jta-data-source>java:comp/env/jdbc/ljbmDS</jta-data-source> -->
+
+		<!-- <class>br.com.ljbm.fp.modelo.Corretora</class> -->
+		<!-- <class>br.com.ljbm.fp.modelo.FundoInvestimento</class> -->
+<!-- 		<class>br.com.ljbm.fp.modelo.Aplicacao</class> -->
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+
+		<properties>
+<!-- 			<property name="javax.persistence.jtaDataSource" value="java:comp/env/jdbc/ljbmDS" /> -->
+
+			<!-- Automatically validate or export schema DDL eg. none | validate | 
+				update | create | create-drop -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
+			<property name="javax.persistence.schema-generation.database.action"
+				value="update" />
+
+			<!-- Use Hibernate Validator annotations to refine the database schema 
+				generation. -->
+			<property name="validator.apply_to_ddl" value="true" />
+
+			<property name="hibernate.archive.autodetection" value="class, hbm" />
+			<property name="hibernate.temp.use_jdbc_metadata_defaults"
+				value="false" />
+<!-- 			<property name="hibernate.transaction.jta.platform" -->
+<!-- 				value="org.hibernate.engine.transaction.jta.platform.internal.WebSphereExtendedJtaPlatform" /> -->
+			<property name="hibernate.transaction.manager_lookup_class"
+				value="org.hibernate.transaction.WebSphereExtendedJTATransactionLookup" />
+			<!-- <property name="jta.UserTransaction" value="java:comp/UserTransaction" 
+				/> -->
+			<property name="hibernate.default_batch_fetch_size" value="32" />
+			<property name="hibernate.delay_cdi_access" value="false" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+
+			<!-- Exibe SQL -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<!-- <property name="hibernate.use_sql_comments" value="false" /> -->
+
+			<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.cache.region.factory_class"
+				value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+
+		</properties>
+
+	</persistence-unit>
+</persistence>
+
+<!-- allow table definitions/creation on-the-fly jpa-2.0 feature -->
+<!-- <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" 
+	/> -->
+<!-- allow table definitions/creation on-the-fly jpa-2.1 feature -->
+<!-- <property name="eclipselink.ddl-generation" value="create-tables" /> -->
+<!-- <property name="eclipselink.ddl-generation" value="update" /> -->

@@ -38,7 +38,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * 
  */
 @Entity
-@Table(name = "FundoInvestimento", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
+@Table(name = "FundoInvestimento")
+//, uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
 //@Cacheable
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @XmlRootElement(name = "FundoInvestimento")
@@ -117,9 +118,9 @@ public class FundoInvestimento implements java.io.Serializable {
 		this.cnpj = cnpj;
 	}
 
-	@Column(name = "nome", nullable = false, length = 60)
+	@Column(name = "nome", nullable = false, length = 90)
 	@NotNull
-	@Size(min = 5, max = 30)
+	@Size(min = 5, max = 90)
 	// TODO configurar validação alfabética
 	// @Pattern(regexp = "[A-Za-z ]*", message =
 	// "must contain only letters and spaces")

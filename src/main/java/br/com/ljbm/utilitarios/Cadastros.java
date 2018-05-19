@@ -1,12 +1,16 @@
 package br.com.ljbm.utilitarios;
 
+import static br.com.ljbm.fp.modelo.Corretora.cnpjAgora;
+import static br.com.ljbm.fp.modelo.Corretora.cnpjBB;
 import static com.jayway.restassured.RestAssured.basePath;
+import static com.jayway.restassured.RestAssured.baseURI;
 import static com.jayway.restassured.RestAssured.given;
 
 import java.math.BigDecimal;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.List;
 
-import com.jayway.restassured.path.json.JsonPath;
+import com.jayway.restassured.response.Response;
 
 import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
@@ -16,35 +20,59 @@ import br.com.ljbm.fp.modelo.TipoFundoInvestimento;
 public class Cadastros {
 
 
-	private static JsonPath enviaPost(FundoInvestimento fundoInvestimento) {
-		JsonPath retorno = given().header("Accept", "application/json").contentType("application/json")
-				.body(fundoInvestimento).when().post("http://pc:9080/ljbmWeb/rest/fundosInvestimento").andReturn()
-				.jsonPath();
+	private static final BigDecimal TAXA_IMPOSTO_RENDA_POS_2ANOS = new BigDecimal("0.15");
+
+
+	private static Response enviaPost(FundoInvestimento fundoInvestimento) {
+		Response retorno = given().header("Accept", "application/json").contentType("application/json")
+				.body(fundoInvestimento).when().post("http://pc:9080/ljbmWeb/rest/fundosInvestimento").andReturn();
 		return retorno;
 	}
 
-
 	public static void main(String[] args) {
 
-		basePath = "http://pc:9080/ljbmWeb";
+//		basePath = "http://localhost:9080/ljbmWeb";
+		baseURI = "http://localhost:9080";
+		basePath = "/ljbmWeb/rest";		
 
+		cadastroFundosInvestimento();
+
+	}
+
+
+	private static void cadastroFundosInvestimento() {
 		Corretora bB = new Corretora();
 		bB.setIde(1l);
 		Corretora Agora = new Corretora();
 		Agora.setIde(2l);
 		
-		Stream<FundoInvestimento> stream = Stream.of(
-			new FundoInvestimento("74014747000135", "Agora Prefixado 2019", new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, Agora)
-		  , new FundoInvestimento("74014747000135", "Agora Prefixado 2023", new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, Agora)
-		  , new FundoInvestimento("74014747000135", "Agora NTNB-2024",      new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, Agora)
-		  , new FundoInvestimento("74014747000135", "Agora NTNB-2035",      new BigDecimal("0.15"), TipoFundoInvestimento.TesouroDireto, Agora)
-		);
+		List<FundoInvestimento> fundos = Arrays.asList(
+				
+				new FundoInvestimento(cnpjBB, "Tesouro IPCA+ 2024", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, bB),
+				new FundoInvestimento(cnpjBB, "Tesouro IPCA+ 2035", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, bB),
+				new FundoInvestimento(cnpjBB, "Tesouro IPCA+ com Juros Semestrais 2024", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, bB),
+				new FundoInvestimento(cnpjBB, "Tesouro IPCA+ com Juros Semestrais 2045", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, bB),
+				
+				new FundoInvestimento(cnpjAgora, "Tesouro IPCA+ 2019", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, Agora),
+				new FundoInvestimento(cnpjAgora, "Tesouro IPCA+ 2024", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, Agora),
+				new FundoInvestimento(cnpjAgora, "Tesouro IPCA+ 2035", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, Agora),
+				new FundoInvestimento(cnpjAgora, "Tesouro Prefixado 2019", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, Agora),
+				new FundoInvestimento(cnpjAgora, "Tesouro Prefixado 2023", TAXA_IMPOSTO_RENDA_POS_2ANOS,
+						TipoFundoInvestimento.TesouroDireto, Agora)
+			);
 		
-		stream.forEach(fundo -> {
-			JsonPath retorno = enviaPost(fundo);
-			retorno.prettyPrint();
-//			FundoInvestimento x = retorno.getObject("", FundoInvestimento.class);
-//			System.out.println(x.toString());
+		
+		fundos.forEach(fundo -> {
+			 Response retorno = enviaPost(fundo);
+			System.out.println("Response Headers\n" + retorno.headers().toString());
 		});
 	}
 
