@@ -28,7 +28,7 @@
 				update | create | create-drop -->
 			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
 			<property name="javax.persistence.schema-generation.database.action"
-				value="update" />
+				value="none" />
 
 			<!-- Use Hibernate Validator annotations to refine the database schema 
 				generation. -->
@@ -37,10 +37,8 @@
 			<property name="hibernate.archive.autodetection" value="class, hbm" />
 			<property name="hibernate.temp.use_jdbc_metadata_defaults"
 				value="false" />
-<!-- 			<property name="hibernate.transaction.jta.platform" -->
-<!-- 				value="org.hibernate.engine.transaction.jta.platform.internal.WebSphereExtendedJtaPlatform" /> -->
-			<property name="hibernate.transaction.manager_lookup_class"
-				value="org.hibernate.transaction.WebSphereExtendedJTATransactionLookup" />
+			<property name="hibernate.transaction.jta.platform"
+				value="org.hibernate.engine.transaction.jta.platform.internal.WebSphereExtendedJtaPlatform" />
 			<!-- <property name="jta.UserTransaction" value="java:comp/UserTransaction" 
 				/> -->
 			<property name="hibernate.default_batch_fetch_size" value="32" />

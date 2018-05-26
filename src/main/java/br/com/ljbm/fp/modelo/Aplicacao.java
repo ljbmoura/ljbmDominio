@@ -2,7 +2,7 @@ package br.com.ljbm.fp.modelo;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -48,7 +46,7 @@ public class Aplicacao implements java.io.Serializable {
 	private static final long serialVersionUID = -2999371111194178089L;
 	private Long ide;
 	private FundoInvestimento fundoInvestimento;
-	private Calendar data;
+	private LocalDate dataCompra;
 	private Long documento;
 	private BigDecimal valorAplicado;
 	private BigDecimal quantidadeCotas;
@@ -62,7 +60,7 @@ public class Aplicacao implements java.io.Serializable {
 //	 * @param quantidadeCotas
 //	 * @param saldoCotas
 //	 */
-//	public Aplicacao(Calendar data, Long documento, BigDecimal valorAplicado,
+//	public Aplicacao(LocalDate data, Long documento, BigDecimal valorAplicado,
 //			BigDecimal quantidadeCotas, BigDecimal saldoCotas) {
 //		this.data = data;
 //		this.documento = documento;
@@ -86,10 +84,10 @@ public class Aplicacao implements java.io.Serializable {
 	 * @return the data
 	 */
 	@Column(name = "data", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	public Calendar getData() {
-		return (Calendar) data.clone();
+	public LocalDate getDataCompra() {
+		return dataCompra;
 	}
 
 	/**
@@ -156,7 +154,7 @@ public class Aplicacao implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "\nAplicacao [data=" + FormatadorBR.formataDataCurta(data)
+		return "Aplicacao [data=" + dataCompra.toString()
 				+ ", documento=" + documento + ", valorAplicado="
 				+ FormatadorBR.formataDecimal(valorAplicado)
 				+ ", quantidadeCotas="
@@ -173,8 +171,8 @@ public class Aplicacao implements java.io.Serializable {
 	 * @param data
 	 *            the data to set
 	 */
-	public void setData(Calendar data) {
-		this.data = data;
+	public void setDataCompra(LocalDate data) {
+		this.dataCompra = data;
 	}
 
 	/**

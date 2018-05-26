@@ -1,15 +1,14 @@
 package br.com.ljbm.utilitarios;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Metodos utilitarios para manipulacao de datas.
- * 
- * @author agazo
- *
- */
+
+
 public class Data {
+
+	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	  
 	/**
 	 * A partir da data especificada, retorna a mesma data com hora igual a
