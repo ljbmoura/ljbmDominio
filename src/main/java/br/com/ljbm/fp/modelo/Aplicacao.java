@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,6 +47,7 @@ public class Aplicacao implements java.io.Serializable {
 	private static final long serialVersionUID = -2999371111194178089L;
 	private Long ide;
 	private FundoInvestimento fundoInvestimento;
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate dataCompra;
 	private Long documento;
 	private BigDecimal valorAplicado;
@@ -84,7 +86,7 @@ public class Aplicacao implements java.io.Serializable {
 	 * @return the data
 	 */
 	@Column(name = "data", nullable = false)
-//	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.DATE)
 	@NotNull
 	public LocalDate getDataCompra() {
 		return dataCompra;
@@ -98,7 +100,7 @@ public class Aplicacao implements java.io.Serializable {
 		return documento;
 	}
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=false, fetch=FetchType.LAZY)
 	public FundoInvestimento getFundoInvestimento() {
 		return fundoInvestimento;
 	}
@@ -160,6 +162,7 @@ public class Aplicacao implements java.io.Serializable {
 				+ ", quantidadeCotas="
 				+ FormatadorBR.formataDecimal(quantidadeCotas)
 				+ ", saldoCotas=" + FormatadorBR.formataDecimal(saldoCotas)
+				+ ", FundoInvestimento.ide=" + (fundoInvestimento != null ? fundoInvestimento.getIde().toString() : "")
 				+ "]";
 	}
 	

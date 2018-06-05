@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,6 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -42,7 +44,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //@Cacheable
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @XmlRootElement(name = "FundoInvestimento")
-//@JsonRootName(value = "FundoInvestimento")
+@JsonRootName(value = "FundoInvestimento")
 @XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType(name = "", propOrder = { "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
 //@JsonPropertyOrder({ "ide", "nome", "cnpj", "tipoFundoInvestimento", "taxaImpostoRenda", "versao" })
@@ -166,11 +168,11 @@ public class FundoInvestimento implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "FundoInvestimento \n\t[id=" + ide + ", \n\tnome=" + nome + ", \n\tCNPJ=" + cnpj
-				+ ", \n\ttipoFundoInvestimento=" + tipoFundoInvestimento  
-				+ ", \n\ttaxaImpostoRenda=" + taxaImpostoRenda
+		return "FundoInvestimento \n\t[id=" + ide + ", \tnome=" + nome + ", \tCNPJ=" + cnpj
+				+ ", \ttipoFundoInvestimento=" + tipoFundoInvestimento  
+				+ ", \ttaxaImpostoRenda=" + taxaImpostoRenda
 //				+ ", \n\tcorretora=" + corretora.getIde()
-				+ ", \n\tversion=" + versao + "]";
+				+ ", \tversion=" + versao + "]";
 	}
 
 }
