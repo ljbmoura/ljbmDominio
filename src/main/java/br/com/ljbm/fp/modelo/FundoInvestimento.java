@@ -1,6 +1,7 @@
 package br.com.ljbm.fp.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -18,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Cache;
@@ -61,6 +64,20 @@ public class FundoInvestimento implements java.io.Serializable {
 	private TipoFundoInvestimento tipoFundoInvestimento;
 	@JsonInclude(Include.NON_NULL)
 	private Corretora corretora;
+	
+	@JsonInclude(Include.NON_NULL)
+	@XmlElementWrapper(name="aplicacoes")
+	private List<Aplicacao> aplicacoes;
+	
+	@OneToMany(mappedBy="fundoInvestimento", fetch=FetchType.LAZY)
+//	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	public List<Aplicacao> getAplicacoes() {
+		return aplicacoes;
+	}
+	
+	public void setAplicacoes(List<Aplicacao> aplicacoes) {
+		this.aplicacoes = aplicacoes;
+	}
 
 	public FundoInvestimento() {
 		// The no-arg constructor required by JPA
