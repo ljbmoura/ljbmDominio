@@ -6,7 +6,8 @@
      http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
 
-	<persistence-unit name="ljbmUP" transaction-type="JTA">
+	<persistence-unit name="ljbmFP" transaction-type="JTA">
+	
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<!-- para criar o schema -->
@@ -14,21 +15,15 @@
 		<!-- para rodar em produção -->
 <!-- 		<jta-data-source>java:comp/env/jdbc/ljbmDS</jta-data-source> -->
 
-		<!-- <class>br.com.ljbm.fp.modelo.Corretora</class> -->
-		<!-- <class>br.com.ljbm.fp.modelo.FundoInvestimento</class> -->
-<!-- 		<class>br.com.ljbm.fp.modelo.Aplicacao</class> -->
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
 
 		<properties>
-<!-- 			<property name="javax.persistence.jtaDataSource" value="java:comp/env/jdbc/ljbmDS" /> -->
-
 			<!-- Automatically validate or export schema DDL eg. none | validate | 
 				update | create | create-drop -->
 			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
-			<property name="javax.persistence.schema-generation.database.action"
-				value="none" />
+			<property name="javax.persistence.schema-generation.database.action" value="none" />
 
 			<!-- Use Hibernate Validator annotations to refine the database schema 
 				generation. -->
