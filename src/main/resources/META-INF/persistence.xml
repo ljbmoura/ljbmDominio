@@ -11,9 +11,9 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<!-- para criar o schema -->
-		<jta-data-source>jdbc/ljbmDS</jta-data-source>
+<!-- 		<jta-data-source>jdbc/ljbmDS</jta-data-source> -->
 		<!-- para rodar em produção -->
-<!-- 		<jta-data-source>java:comp/env/jdbc/ljbmDS</jta-data-source> -->
+		<jta-data-source>java:comp/env/jdbc/ljbmDS</jta-data-source>
 
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
@@ -22,8 +22,8 @@
 		<properties>
 			<!-- Automatically validate or export schema DDL eg. none | validate | 
 				update | create | create-drop -->
-			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
-			<property name="javax.persistence.schema-generation.database.action" value="none" />
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="create" /> -->
+<!-- 			<property name="javax.persistence.schema-generation.database.action" value="none" /> -->
 
 			<!-- Use Hibernate Validator annotations to refine the database schema 
 				generation. -->
@@ -39,12 +39,7 @@
 			<property name="hibernate.default_batch_fetch_size" value="32" />
 			<property name="hibernate.delay_cdi_access" value="false" />
 
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-
-			<!-- Exibe SQL -->
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			<!-- <property name="hibernate.use_sql_comments" value="false" /> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2008Dialect"/>
 
 			<property name="hibernate.cache.use_second_level_cache"
 				value="true" />
