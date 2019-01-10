@@ -3,6 +3,7 @@ package br.com.ljbm.fp.modelo;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -62,14 +63,18 @@ public class Aplicacao implements java.io.Serializable {
 //	 * @param quantidadeCotas
 //	 * @param saldoCotas
 //	 */
-//	public Aplicacao(LocalDate data, Long documento, BigDecimal valorAplicado,
-//			BigDecimal quantidadeCotas, BigDecimal saldoCotas) {
-//		this.data = data;
-//		this.documento = documento;
-//		this.valorAplicado = valorAplicado;
-//		this.quantidadeCotas = quantidadeCotas;
-//		this.saldoCotas = saldoCotas;
-//	}
+	public Aplicacao(LocalDate data, Long documento, BigDecimal valorAplicado,
+			BigDecimal quantidadeCotas, BigDecimal saldoCotas) {
+		this.dataCompra = data;
+		this.documento = documento;
+		this.valorAplicado = valorAplicado;
+		this.quantidadeCotas = quantidadeCotas;
+		this.saldoCotas = saldoCotas;
+	}
+
+	public Aplicacao() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
