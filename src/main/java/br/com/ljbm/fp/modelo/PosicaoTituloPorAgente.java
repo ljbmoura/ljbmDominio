@@ -7,7 +7,7 @@ import br.com.ljbm.fp.modelo.Aplicacao;
 
 public class PosicaoTituloPorAgente {
 	private String titulo; 				// Tesouro IPCA+ 2024
-	private String agenteCustodia; 		// BB BANCO DE INVESTIMENTO S/A
+	private String agenteCustodia; 		// BB , Agora etc
 	private LocalDate posicaoEm;   		// 14/05/2018
 	private LocalDate vencimentoTitulo; // 15/08/2024	
 	

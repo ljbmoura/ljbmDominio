@@ -16,11 +16,14 @@ public class ComparacaoInvestimentoVersusSELIC implements java.io.Serializable {
 	 * @param totalValorFundo
 	 * @param totalValorEquivalenteSELIC
 	 */
-	public ComparacaoInvestimentoVersusSELIC(String nomeInvestimento,
+	public ComparacaoInvestimentoVersusSELIC(
+			String siglaAgente,
+			String nomeInvestimento,
 			BigDecimal taxaRentabilidadeFundo,
 			BigDecimal taxaRentabilidadeSELICEquivalenteFundo,
 			BigDecimal diferencaRentabilidadeFundoSELIC,
 			BigDecimal totalValorFundo, BigDecimal totalValorEquivalenteSELIC) {
+		this.siglaAgente = siglaAgente;
 		this.nomeInvestimento = nomeInvestimento;
 		this.taxaRentabilidadeFundo = taxaRentabilidadeFundo;
 		this.taxaRentabilidadeSELICEquivalenteFundo = taxaRentabilidadeSELICEquivalenteFundo;
@@ -35,7 +38,7 @@ public class ComparacaoInvestimentoVersusSELIC implements java.io.Serializable {
 	//	4402.657286666064590000    
 	//	40268.166180167520000   
 	//	35865.508893501455410000
-	
+	private String siglaAgente;
 	private String nomeInvestimento;
 	private BigDecimal taxaRentabilidadeFundo;
 	private BigDecimal taxaRentabilidadeSELICEquivalenteFundo;
@@ -115,6 +118,12 @@ public class ComparacaoInvestimentoVersusSELIC implements java.io.Serializable {
 	 */
 	public void setTotalValorEquivalenteSELIC(BigDecimal totalValorEquivalenteSELIC) {
 		this.totalValorEquivalenteSELIC = totalValorEquivalenteSELIC;
+	}
+	public String getSiglaAgente() {
+		return siglaAgente;
+	}
+	public void setSiglaAgente(String siglaAgente) {
+		this.siglaAgente = siglaAgente;
 	}
 
 
