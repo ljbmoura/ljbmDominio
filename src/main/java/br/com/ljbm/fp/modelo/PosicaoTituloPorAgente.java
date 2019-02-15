@@ -10,6 +10,7 @@ public class PosicaoTituloPorAgente {
 	private String agenteCustodia; 		// BB , Agora etc
 	private LocalDate posicaoEm;   		// 14/05/2018
 	private LocalDate vencimentoTitulo; // 15/08/2024	
+	private TipoFundoInvestimento tipoFundoInvestimento;
 	
 	private List<Aplicacao> compras; // 
 	// data compra		quantidade cotas compra		valor cota
@@ -53,6 +54,14 @@ public class PosicaoTituloPorAgente {
 
 	public void setCompras(List<Aplicacao> compras) {
 		this.compras = compras;
+	}
+
+	public TipoFundoInvestimento getTipoFundoInvestimento() {
+		return tipoFundoInvestimento;
+	}
+
+	public void setTipoFundoInvestimento(TipoFundoInvestimento tipoFundoInvestimento) {
+		this.tipoFundoInvestimento = tipoFundoInvestimento;
 	}
 
 
