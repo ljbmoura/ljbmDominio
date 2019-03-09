@@ -3,6 +3,7 @@ package br.com.ljbm.fp.modelo;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -44,7 +45,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "FundoInvestimento")
 //, uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
 //@Cacheable
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @XmlRootElement(name = "FundoInvestimento")
 @JsonRootName(value = "FundoInvestimento")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -66,10 +67,10 @@ public class FundoInvestimento implements java.io.Serializable {
 	
 	@JsonInclude(Include.NON_NULL)
 	@XmlElementWrapper(name="aplicacoes")
+	//	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	private List<Aplicacao> aplicacoes;
 	
-	@OneToMany(mappedBy="fundoInvestimento", fetch=FetchType.LAZY)
-//	@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@OneToMany(mappedBy = "fundoInvestimento", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Aplicacao> getAplicacoes() {
 		return aplicacoes;
 	}

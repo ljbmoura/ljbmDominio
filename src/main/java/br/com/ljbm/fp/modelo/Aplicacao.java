@@ -3,7 +3,6 @@ package br.com.ljbm.fp.modelo;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Calendar;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -19,6 +18,12 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import br.com.ljbm.utilitarios.FormatadorBR;
 
@@ -49,6 +54,9 @@ public class Aplicacao implements java.io.Serializable {
 	private Long ide;
 	private FundoInvestimento fundoInvestimento;
 //	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)	
 	private LocalDate dataCompra;
 	private Long documento;
 	private BigDecimal valorAplicado;
@@ -105,7 +113,7 @@ public class Aplicacao implements java.io.Serializable {
 		return documento;
 	}
 	
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)	
 	public FundoInvestimento getFundoInvestimento() {
 		return fundoInvestimento;
 	}

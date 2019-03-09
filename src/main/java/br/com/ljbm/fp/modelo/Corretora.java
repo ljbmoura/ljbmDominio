@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Corretora")
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @XmlRootElement(name = "Corretora")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
