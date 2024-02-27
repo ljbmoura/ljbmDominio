@@ -80,10 +80,6 @@ public class Aplicacao implements java.io.Serializable {
 		this.saldoCotas = saldoCotas;
 	}
 
-	public Aplicacao() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ide")
@@ -91,9 +87,9 @@ public class Aplicacao implements java.io.Serializable {
 		return ide;
 	}
 	
-//	public Aplicacao() {
-//		// construtor sem argumentos exigido pela JPA
-//	}
+	public Aplicacao() { 
+		// org.hibernate.InstantiationException: No default constructor for entity 
+	}
 
 	/**
 	 * @return the data

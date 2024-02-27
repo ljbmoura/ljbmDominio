@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -60,6 +61,7 @@ public class FundoInvestimento implements java.io.Serializable {
 	private Integer versao;
 	private String cnpj;
 	private String nome;
+	private String nomeAbreviado;
 	private BigDecimal taxaImpostoRenda;
 	private TipoFundoInvestimento tipoFundoInvestimento;
 	@JsonInclude(Include.NON_NULL)
@@ -93,7 +95,6 @@ public class FundoInvestimento implements java.io.Serializable {
 		this.corretora = corretora;
 	}
 
-	// TODO desativar este construtor
 	public FundoInvestimento(String cnpj, String nome, BigDecimal taxaimpostorenda,
 			TipoFundoInvestimento tipoFundoInvestimento) {
 		this.cnpj = cnpj;
@@ -125,9 +126,8 @@ public class FundoInvestimento implements java.io.Serializable {
 	}
 
 	@Column(name = "cnpj", nullable = true, length = 14)
-	// TODO configurar validações CNPJ, ver curso caelum
-	// @Size(min = 0, max = 14)
-	// @Digits(fraction = 0, integer = 14)
+	@Size(min = 14, max = 14)
+	@Digits(fraction = 0, integer = 14)
 	public String getCNPJ() {
 		return this.cnpj;
 	}
@@ -139,15 +139,23 @@ public class FundoInvestimento implements java.io.Serializable {
 	@Column(name = "nome", nullable = false, length = 90)
 	@NotNull
 	@Size(min = 5, max = 90)
-	// TODO configurar validação alfabética
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
 	public String getNome() {
 		return this.nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	@Column(name = "nomeAbreviado", nullable = false, length = 90)
+	@NotNull
+	@Size(min = 5, max = 30)
+	public String getNomeAbreviado() {
+		return this.nomeAbreviado;
+	}
+
+	public void setNomeAbreviado(String Abreviado) {
+		this.nomeAbreviado = Abreviado;
 	}
 
 	@Column(name = "taxaImpostoRenda", nullable = true, precision = 19, scale = 6)

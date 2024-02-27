@@ -3,8 +3,6 @@ package br.com.ljbm.fp.modelo;
 import java.time.LocalDate;
 import java.util.List;
 
-import br.com.ljbm.fp.modelo.Aplicacao;
-
 public class PosicaoTituloPorAgente {
 	private String titulo; 				// Tesouro IPCA+ 2024
 	private String agenteCustodia; 		// BB , Agora etc
